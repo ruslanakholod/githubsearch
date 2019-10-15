@@ -10,7 +10,7 @@ import { Query } from 'react-apollo';
 
 
 
-const REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN = '098056251828106293da7d9efd7a115e47d4b23e';
+const REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN = 'e66a0918d16e144baf9a6d7de268beef7c2f6ad9';
 const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql' })
 
 const authLink = setContext((_, { headers }) => {
