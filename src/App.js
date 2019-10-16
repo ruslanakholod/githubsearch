@@ -8,16 +8,15 @@ import gql from 'graphql-tag';
 import Profile from './Components/Profile';
 import { Query } from 'react-apollo';
 
-
-
-const REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN = 'e66a0918d16e144baf9a6d7de268beef7c2f6ad9';
 const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql' })
 
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: `Bearer ${REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN}`
+      authorization: `Bearer ${
+        process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
+        }`,
     }
   }
 })
