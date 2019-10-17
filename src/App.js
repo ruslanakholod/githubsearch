@@ -7,6 +7,8 @@ import { InMemoryCache } from 'apollo-boost';
 import gql from 'graphql-tag';
 import Profile from './Components/Profile';
 import { Query } from 'react-apollo';
+import { injectGlobal, css } from 'emotion';
+
 
 const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql' })
 
@@ -48,14 +50,11 @@ class App extends React.Component {
     )
 
     if (test) {
-      console.log(1)
       if (searchRequest.length > 1) {
         this.setState({
           result: searchRequest.replace(/\W/, '')
         });
       } else {
-        console.log(2)
-
         this.setState({
           result: searchRequest.replace(/\W/, null)
         });
@@ -67,8 +66,6 @@ class App extends React.Component {
       });
     }
     else {
-      console.log(3)
-
       this.setState({
         result: searchRequest
       });
@@ -97,9 +94,16 @@ class App extends React.Component {
 
     return (
       <ApolloProvider client={client}>
-        <div className="App">
-          <input type='text' placeholder='git' onChange={this.handleChange} />
-          < Profile user={GET_CURRENT_USER} />
+        <div className={styles.app}>
+          <div className={styles.app__wrapper}>
+            <div className={styles.app__title}>GitHubSearch</div>
+            <div className={styles.app__search_wrapper}>
+              <div className={styles.app__search}>
+                <input className={styles.app__search_input} type='text' placeholder='Username' onChange={this.handleChange} />
+              </div>
+              < Profile user={GET_CURRENT_USER} />
+            </div>
+          </div>
         </div>
       </ApolloProvider>
     );
@@ -107,3 +111,43 @@ class App extends React.Component {
 }
 
 export default App;
+
+injectGlobal`
+        
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: Helvetica, Arial, sans-serif;       
+    }
+`;
+
+const styles = {
+  app: css`
+    font-size: 30px;
+  `,
+  app__wrapper: css`
+    margin: 60px;
+  `,
+  app__title: css`
+    font-size: 45px;
+    font-weight: 700;
+  `,
+  app__search: css`
+    display: flex;
+    margin-bottom: 40px;
+  `,
+  app__search_wrapper: css`
+    margin: 70px 0;
+  `,
+  app__search_input: css`
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+    font-size: 30px;
+    border: 0;
+    border-bottom: 2px solid black;
+    outline: none;
+  `,
+
+}

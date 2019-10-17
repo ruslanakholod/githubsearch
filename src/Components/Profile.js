@@ -1,13 +1,14 @@
 import React from 'react';
 import { Query } from 'react-apollo';
+import { css } from 'emotion';
 
 
 const GitProfile = ({ user }) => (
 
   <Query query={user}>
     {({ loading, error, data }) => {
-      if (loading) return <h4>Loading</h4>
-      if (error) return <h4>Not found</h4>
+      if (loading) return <p className={styles.user_error}>Loading</p>
+      if (error) return <p className={styles.user_error}>User not found. Try again</p>
 
       let repositories;
       let user;
@@ -40,7 +41,7 @@ const GitProfile = ({ user }) => (
               }
             </div>
             :
-            <h4> found</h4>
+            <p className={styles.user_error}>User not found. Try again</p>
           }
         </div>
       )
@@ -49,3 +50,10 @@ const GitProfile = ({ user }) => (
 )
 
 export default GitProfile;
+
+const styles = {
+  user_error: css`
+    text-align: center;
+    font-size: 22px;
+  `,
+}
