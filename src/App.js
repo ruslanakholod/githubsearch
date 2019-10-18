@@ -77,11 +77,11 @@ class App extends React.Component {
 
     const GET_CURRENT_USER = gql`
       {
-          repositoryOwner(login: "${ this.state.result}") {
+          repositoryOwner(login: "${this.state.result}") {
               ... on User {
                   login
                   avatarUrl
-                  repositories(first: 7) {
+                  repositories(last: 7) {
                     nodes{
                       name
                       url
@@ -99,7 +99,7 @@ class App extends React.Component {
             <div className={styles.app__title}>GitHubSearch</div>
             <div className={styles.app__search_wrapper}>
               <div className={styles.app__search}>
-                <input className={styles.app__search_input} type='text' placeholder='Username' onChange={this.handleChange} />
+                <input className={styles.app__search_input} type='text' placeholder='GitHub username' onChange={this.handleChange} />
               </div>
               < Profile user={GET_CURRENT_USER} />
             </div>
@@ -123,31 +123,44 @@ injectGlobal`
 `;
 
 const styles = {
-  app: css`
-    font-size: 30px;
-  `,
   app__wrapper: css`
     margin: 60px;
+
+    @media (max-width: 767px) {
+      margin: 60px 25px;
+    }
   `,
+
   app__title: css`
     font-size: 45px;
     font-weight: 700;
+
+    @media (max-width: 767px) {
+      font-size: 30px;
+    }
   `,
+
   app__search: css`
     display: flex;
-    margin-bottom: 40px;
+    margin-bottom: 70px;
   `,
+
   app__search_wrapper: css`
     margin: 70px 0;
   `,
+
   app__search_input: css`
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
+    padding: 10px 20px;
     margin: 0 auto;
     font-size: 30px;
     border: 0;
     border-bottom: 2px solid black;
     outline: none;
-  `,
 
+    @media (max-width: 767px) {
+      font-size: 25px;
+    }
+  `
 }
