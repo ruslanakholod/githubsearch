@@ -42,9 +42,15 @@ class App extends React.Component {
     const parsed = queryString.parse(this.props.location.search);
     const login = parsed.user;
 
-    this.setState({
-      result: login
-    })
+    if (this.props.location.search) {
+      this.setState({
+        result: login
+      })
+    } else {
+      this.setState({
+        result: ''
+      })
+    }
   }
 
   componentWillUnmount() {
