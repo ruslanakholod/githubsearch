@@ -2,7 +2,6 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { css } from 'emotion';
 
-
 const GitHubProfile = ({ user }) => (
 
   <Query query={user}>
@@ -27,25 +26,29 @@ const GitHubProfile = ({ user }) => (
       return (
         <div>
           {user != null ?
-            <div className={styles.profile}>
-              <div>
-                <div className={styles.profile__photo} style={{ backgroundImage: `url(${user.avatarUrl})` }} />
-                <p className={styles.profile__login}>{user.login}</p>
-              </div>
-              <div className={styles.profile__repositories}>
-                <p>Repositories:</p>
-                {repositories.length > 0 ?
-                  <ul>
-                    {repositories.map((repository, index) => {
-                      return <li className={styles.profile__repository} key={index} >
-                        <a href={repository.url} target='_blank' rel="noopener noreferrer">{repository.name}
-                        </a>
-                      </li>
-                    })}
-                  </ul>
-                  :
-                  <p>No repositories</p>
-                }
+
+            <div className='lol'>
+
+              <div className={styles.profile}>
+                <div>
+                  <div className={styles.profile__photo} style={{ backgroundImage: `url(${user.avatarUrl})` }} />
+                  <p className={styles.profile__login}>{user.login}</p>
+                </div>
+                <div className={styles.profile__repositories}>
+                  <p>Repositories:</p>
+                  {repositories.length > 0 ?
+                    <ul>
+                      {repositories.map((repository, index) => {
+                        return <li className={styles.profile__repository} key={index} >
+                          <a href={repository.url} target='_blank' rel="noopener noreferrer">{repository.name}
+                          </a>
+                        </li>
+                      })}
+                    </ul>
+                    :
+                    <p>No repositories</p>
+                  }
+                </div>
               </div>
             </div>
             :

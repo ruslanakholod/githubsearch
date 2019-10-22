@@ -6,8 +6,9 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-boost';
 import gql from 'graphql-tag';
 import Profile from './Components/Profile';
-import { Query } from 'react-apollo';
 import { injectGlobal, css } from 'emotion';
+import { withRouter } from "react-router";
+import queryString from 'query-string';
 
 
 const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql' })
@@ -37,11 +38,25 @@ class App extends React.Component {
     result: ''
   }
 
+  componentDidMount() {
+    const parsed = queryString.parse(this.props.location.search);
+    const login = parsed.user;
+
+    this.setState({
+      result: login
+    })
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      result: ''
+    })
+  }
+
   handleChange = (e) => {
     let searchRequest = e.target.value.trim().toLowerCase();
     let regex = /\W/gi;
     let test = regex.test(searchRequest);
-
 
     if (e.target.value.charAt(0) === ' ') {
       e.target.value = '';
@@ -53,24 +68,31 @@ class App extends React.Component {
       if (searchRequest.length > 1) {
         this.setState({
           result: searchRequest.replace(/\W/, '')
+        }, () => {
+          this.props.history.push(`/?user=${this.state.result}`)
         });
       } else {
         this.setState({
           result: searchRequest.replace(/\W/, null)
+        }, () => {
+          this.props.history.push(`/?user=${this.state.result}`)
         });
       }
     }
     else if (searchRequest === '') {
       this.setState({
         result: ''
+      }, () => {
+        this.props.history.push(`/?user=${this.state.result}`)
       });
     }
     else {
       this.setState({
         result: searchRequest
+      }, () => {
+        this.props.history.push(`/?user=${this.state.result}`)
       });
     }
-
   };
 
   render() {
@@ -110,7 +132,7 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);
 
 injectGlobal`
         
